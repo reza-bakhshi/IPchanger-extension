@@ -1,0 +1,13 @@
+{
+  "uuid": "ipchanger@rezabakhshi.ir",
+  "name": "IPchanger",
+  "description": "Quickly switch between predefined IP configurations",
+  "version": 1,
+  "shell-version": [
+    "45",
+    "46",
+    "47"
+  ],
+  "url": "",
+  "settings-schema": "org.gnome.shell.extensions.ipchanger"
+}

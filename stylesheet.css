@@ -1,0 +1,18 @@
+.popup-menu-item-title {
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.ip-profile-item {
+    padding: 6px 12px;
+}
+
+.ip-profile-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.ip-profile-details {
+    font-size: 0.9em;
+    color: #cccccc;
+    margin-top: 2px;
+}
