@@ -51,6 +51,3 @@ cd ~/.local/share/gnome-shell/extensions/ipchanger@rezabakhshi.github/
 
 ## 🧑🏻‍💻 Author
 > Reza Bakhshi (bakhshireza221@gmail.com)
-
-
-Feel free to contribute or report issues!
