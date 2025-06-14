@@ -18,7 +18,7 @@ const IPChangerIndicator = GObject.registerClass(
       super._init(0.0, "IPchanger");
 
       this._icon = new St.Icon({
-        icon_name: "network-wired-symbolic",
+        icon_name: "face-angel-symbolic",
         style_class: "system-status-icon",
       });
       this.add_child(this._icon);
@@ -72,7 +72,6 @@ const IPChangerIndicator = GObject.registerClass(
 
           let title = new St.Label({
             text: profile.name,
-            style_class: "popup-menu-item",
             style: "color: #fff;",
           });
 
@@ -151,10 +150,6 @@ const IPChangerIndicator = GObject.registerClass(
         profile.gateway,
       ];
 
-      if (profile.dns && profile.dns.trim() !== "") {
-        command.push("ipv4.dns", profile.dns);
-      }
-
       try {
         let proc = Gio.Subprocess.new(
           command,
@@ -196,9 +191,7 @@ const IPChangerIndicator = GObject.registerClass(
         "ipv4.addresses",
         "",
         "ipv4.gateway",
-        "",
-        "ipv4.dns",
-        "",
+        ""
       ];
 
       try {
