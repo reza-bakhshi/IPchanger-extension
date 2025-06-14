@@ -273,7 +273,7 @@ const IPChangerIndicator = GObject.registerClass(
     _openPreferences() {
       try {
         Gio.Subprocess.new(
-          ["gnome-extensions", "prefs", "ipchanger@rezabakhshi.ir"],
+          ["gnome-extensions", "prefs", "ipchanger@rezabakhshi.github"],
           Gio.SubprocessFlags.NONE
         );
       } catch (e) {
