@@ -17,20 +17,16 @@ const IPChangerIndicator = GObject.registerClass(
     _init(settings) {
       super._init(0.0, "IPchanger");
 
-      // Create the panel button icon
       this._icon = new St.Icon({
         icon_name: "network-wired-symbolic",
         style_class: "system-status-icon",
       });
       this.add_child(this._icon);
 
-      // Store settings reference
       this._settings = settings;
 
-      // Build the menu
       this._buildMenu();
 
-      // Connect to settings changes
       this._settingsChangedId = this._settings.connect("changed", () => {
         this._rebuildMenu();
       });
@@ -47,7 +43,6 @@ const IPChangerIndicator = GObject.registerClass(
     _buildMenu() {
       this.menu.removeAll();
 
-      // Add title
       let connectionIcon = new St.Icon({
         icon_name: "network-wired-symbolic",
         style_class: "popup-menu-icon",
@@ -60,7 +55,6 @@ const IPChangerIndicator = GObject.registerClass(
       titleItem.insert_child_at_index(connectionIcon, 1);
       this.menu.addMenuItem(titleItem);
 
-      // Get saved IP profiles
       let profiles = this._getProfiles();
 
       if (profiles.length === 0) {
@@ -76,14 +70,12 @@ const IPChangerIndicator = GObject.registerClass(
           let item = new PopupMenu.PopupBaseMenuItem();
           let textBox = new St.BoxLayout({ vertical: true });
 
-          // Main title
           let title = new St.Label({
             text: profile.name,
             style_class: "popup-menu-item",
             style: "color: #fff;",
           });
 
-          // Detail label with clearer style override
           let detail = new St.Label({
             text: "IP: " + profile.ip,
             style: "font-size: 12px; color: #888;",
@@ -101,7 +93,6 @@ const IPChangerIndicator = GObject.registerClass(
 
       this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
 
-      // Add DHCP option
       let resetIcon = new St.Icon({
         icon_name: "view-refresh-symbolic",
         style_class: "popup-menu-icon",
@@ -114,7 +105,6 @@ const IPChangerIndicator = GObject.registerClass(
       });
       this.menu.addMenuItem(dhcpItem);
 
-      // ADD settings option
       let settingsIcon = new St.Icon({
         icon_name: "preferences-system-symbolic",
         style_class: "popup-menu-icon",
@@ -142,14 +132,12 @@ const IPChangerIndicator = GObject.registerClass(
     }
 
     _applyProfile(profile) {
-      // Get active connection name
       let connectionName = this._getActiveConnectionName();
       if (!connectionName) {
         this._showNotification("No active connection found");
         return;
       }
 
-      // Apply the IP configuration using nmcli
       let command = [
         "nmcli",
         "connection",
@@ -163,7 +151,6 @@ const IPChangerIndicator = GObject.registerClass(
         profile.gateway,
       ];
 
-      // Add DNS if specified
       if (profile.dns && profile.dns.trim() !== "") {
         command.push("ipv4.dns", profile.dns);
       }
@@ -178,7 +165,6 @@ const IPChangerIndicator = GObject.registerClass(
           try {
             let [, stdout, stderr] = proc.communicate_utf8_finish(res);
             if (proc.get_successful()) {
-              // Restart the connection to apply changes
               this._restartConnection(connectionName);
               this._showNotification(`Applied IP profile: ${profile.name}`);
             } else {
@@ -261,14 +247,12 @@ const IPChangerIndicator = GObject.registerClass(
 
     _restartConnection(connectionName) {
       try {
-        // Down the connection
         let downProc = Gio.Subprocess.new(
           ["nmcli", "connection", "down", connectionName],
           Gio.SubprocessFlags.NONE
         );
 
         downProc.wait_async(null, () => {
-          // Small delay then bring connection back up
           GLib.timeout_add(GLib.PRIORITY_DEFAULT, 2000, () => {
             try {
               let upProc = Gio.Subprocess.new(
@@ -276,7 +260,6 @@ const IPChangerIndicator = GObject.registerClass(
                 Gio.SubprocessFlags.NONE
               );
               upProc.wait_async(null, () => {
-                // Connection should be back up
               });
             } catch (e) {
               console.log(`Error bringing connection up: ${e.message}`);
@@ -291,7 +274,6 @@ const IPChangerIndicator = GObject.registerClass(
 
     _showNotification(message) {
       Main.notify("IPchanger", message);
-      // Also log to console for debugging
       console.log(`IPchanger: ${message}`);
     }
 
