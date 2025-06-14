@@ -2,6 +2,12 @@
 
 A GNOME Shell extension to quickly switch between predefined IP profiles or revert to DHCP on your active network connection.
 
+![1](images/IPchanger1.png)
+
+![2](images/IPchanger2.png)
+
+![3](images/IPchanger3.png)
+
 ## 😎 Features
 
 - Display a status icon in the GNOME top panel.
@@ -42,12 +48,11 @@ cd ~/.local/share/gnome-shell/extensions/ipchanger@rezabakhshi.github/
 
 - Ensure `nmcli` is installed and you have the required permissions.
 - Active connection detection relies on `nmcli` output.
-- Check GNOME Shell logs for errors 
-    ```bash
-    journalctl /usr/bin/gnome-shell -f
-    ```
-
-
+- Check GNOME Shell logs for errors
+  ```bash
+  journalctl /usr/bin/gnome-shell -f
+  ```
 
 ## 🧑🏻‍💻 Author
+
 > Reza Bakhshi (bakhshireza221@gmail.com)
